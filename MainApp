@@ -1,0 +1,75 @@
+package com.example.KedishiPOSsample;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static class PaymentApp {
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("Welcome to the E-top Payment App!");
+
+            // Prompt user for account type
+            System.out.println("Select account type:");
+            System.out.println("1. Savings");
+            System.out.println("2. Current");
+            System.out.print("Enter option (1 or 2): ");
+            scanner.nextInt();
+
+            System.out.print("Please enter your ATM PIN: ");
+            int atmPin = scanner.nextInt();
+            if (validateATMPin(atmPin)) {
+                System.out.print("Enter the amount to be paid: ");
+                double amount = scanner.nextDouble();
+
+                if (makePayment(amount)) {
+                    System.out.println("Payment successful!");
+                    printReceipt(amount);
+                    generateEODReport();
+                } else {
+                    System.out.println("Payment failed. Please try again.");
+                }
+            } else {
+                System.out.println("Invalid ATM PIN. Transaction aborted.");
+            }
+
+            scanner.close();
+        }
+
+        public static boolean makePayment(double amount) {
+            // Simulate payment process (replace with actual payment gateway integration)
+            // For simplicity, we assume the payment is successful if the amount is positive.
+            return amount > 0;
+        }
+
+        public static boolean validateATMPin(int pin) {
+            // Simulate ATM PIN validation (replace with actual logic)
+            int correctPin = 1234; // Replace with the correct PIN
+            return pin == correctPin;
+        }
+
+        public static void printReceipt(double amount) {
+            System.out.println("\nReceipt:");
+            System.out.println("----------------------------");
+            System.out.println("Date: " + getCurrentDate());
+            System.out.println("Amount: =N=" + amount);
+            System.out.println("Thank you for your purchase!");
+        }
+
+        public static void generateEODReport() {
+            System.out.println("\nEnd of Day Report:");
+            System.out.println("----------------------------");
+            System.out.println("Date: " + getCurrentDate());
+            System.out.println("Total transactions: 1"); // Replace with actual transaction count
+            System.out.println("Total amount: =N="); // Add logic to calculate total amount
+            System.out.println("Have a great day!");
+        }
+
+        public static String getCurrentDate() {
+            // Simulate getting the current date (replace with actual date logic)
+            return "2023-08-15";
+        }
+    }
+}
