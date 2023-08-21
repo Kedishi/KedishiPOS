@@ -1,0 +1,70 @@
+package com.example.KedishiPOSsample;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static class PaymentApp {
+
+        // Assume there's a POSDeviceAPI class that interacts with the POS device API
+        private static POSDeviceAPI posDeviceAPI;
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("Welcome to the E-top Payment App!");
+
+            // Initialize the POS device API
+            posDeviceAPI = new POSDeviceAPI(); // Initialize according to your API
+
+            // Prompt user for account type
+            System.out.println("Select account type:");
+            System.out.println("1. Savings");
+            System.out.println("2. Current");
+            System.out.print("Enter option (1 or 2): ");
+            int accountType = scanner.nextInt();
+
+            System.out.print("Please enter your ATM PIN: ");
+            int atmPin = scanner.nextInt();
+            if (validateATMPin(atmPin)) {
+                System.out.print("Enter the amount to be paid: ");
+                double amount = scanner.nextDouble();
+
+                if (makePayment(amount)) {
+                    System.out.println("Payment successful!");
+
+                    // Send payment details to the POS device
+                    if (sendPaymentToPOSDevice(amount, accountType)) {
+                        printReceipt(amount);
+                        generateEODReport();
+                    } else {
+                        System.out.println("Error communicating with POS device.");
+                    }
+                } else {
+                    System.out.println("Payment failed. Please try again.");
+                }
+            } else {
+                System.out.println("Invalid ATM PIN. Transaction aborted.");
+            }
+
+            scanner.close();
+        }
+
+        // ... (other methods remain the same)
+
+        public static boolean sendPaymentToPOSDevice(double amount, int accountType) {
+            // Simulated method, replace with actual implementation
+            return posDeviceAPI.sendPayment(amount, accountType);
+        }
+    }
+
+    // Simulated POSDeviceAPI class, replace with actual implementation
+    static class POSDeviceAPI {
+        public boolean sendPayment(double amount, int accountType) {
+            // Replace with actual implementation to send payment details to the POS device
+            // Return true if successful, false if there's an error
+            // Example: You might call methods provided by the POS device SDK here
+            return true;
+        }
+    }
+}
